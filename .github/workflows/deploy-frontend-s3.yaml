@@ -53,12 +53,10 @@ jobs:
           rm -rf .env
           echo "API_URL=${{ secrets.REACT_APP_WEB3_AUTH_CLIENT_ID }}" >> .env
           pwd
-          cd client
           ls
 
       - name: build assets
         run: |
-          npm run
           CI=false npm run build
           cat /home/runner/.npm/_logs/2024-05-05T09_27_00_851Z-debug-0.log
 
