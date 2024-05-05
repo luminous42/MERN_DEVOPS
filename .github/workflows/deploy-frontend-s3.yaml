@@ -38,7 +38,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_STS_ROLE }}
           role-session-name: cicd
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }} #just comment
+          aws-region: us-east-1 # ${{ secrets.AWS_DEFAULT_REGION }} #just comment
 
       # - name: Get .env
       #   run: aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/env" --with-decryption --query 'Parameter.Value' --output text | tr -d '"' >.env
