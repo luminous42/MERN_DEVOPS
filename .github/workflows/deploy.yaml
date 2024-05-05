@@ -1,15 +1,15 @@
-# name: Build and upload docker image
-# on:
-#   pull_request:
-#     branches:
-#       - "master"
-#   push:
-#     branches:
-#       - '**'
+name: Build and upload docker image
+on:
+  pull_request:
+    branches:
+      - 'development'
+  push:
+    branches:
+      - '**'
 
-# jobs:
-#   build-upload:
-#     runs-on: ubuntu-latest
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
 #     environment: ${{ github.ref_name }}
 #     steps:
 #       - uses: actions/checkout@v3
