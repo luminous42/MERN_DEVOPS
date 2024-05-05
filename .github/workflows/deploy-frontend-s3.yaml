@@ -36,7 +36,7 @@ jobs:
       - name: configureawscredentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ secrets.AWS_STS_ROLE }}
+          role-to-assume: arn:aws:iam::965244704449:oidc-provider/token.actions.githubusercontent.com # ${{ secrets.AWS_STS_ROLE }}
           role-session-name: cicd
           aws-region: us-east-1 # ${{ secrets.AWS_DEFAULT_REGION }} #just comment
 
