@@ -34,10 +34,10 @@ jobs:
         run: npm install --prefer-offline --no-fund
 
       - name: Echo AWS Access Key ID
-        run: echo " ${{ secrets.AWS_ACCESS_KEY_ID }}"
+        run: echo  ${{ secrets.AWS_ACCESS_KEY_ID }}
 
       - name: Echo AWS Secret Access Key
-        run: echo " ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: echo  secrets.AWS_SECRET_ACCESS_KEY
 
       - name: configureawscredentials
         uses: aws-actions/configure-aws-credentials@v1
