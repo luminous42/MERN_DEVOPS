@@ -34,11 +34,15 @@ jobs:
         run: npm install --prefer-offline --no-fund
 
       - name: configureawscredentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::965244704449:oidc-provider/token.actions.githubusercontent.com # ${{ secrets.AWS_STS_ROLE }}
-          role-session-name: cicd
-          aws-region: us-east-1 # ${{ secrets.AWS_DEFAULT_REGION }} #just comment
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     role-to-assume: arn:aws:iam::965244704449:oidc-provider/token.actions.githubusercontent.com # ${{ secrets.AWS_STS_ROLE }}
+      #     role-session-name: cicd
+      #     aws-region: us-east-1 # ${{ secrets.AWS_DEFAULT_REGION }} #just comment
 
       # - name: Get .env
       #   run: aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/env" --with-decryption --query 'Parameter.Value' --output text | tr -d '"' >.env
