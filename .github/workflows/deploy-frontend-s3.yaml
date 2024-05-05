@@ -33,12 +33,6 @@ jobs:
       - name: install dependencies
         run: npm install --prefer-offline --no-fund
 
-      - name: Echo AWS Access Key ID
-        run: echo  ${{ secrets.AWS_ACCESS_KEY_ID }}
-
-      - name: Echo AWS Secret Access Key
-        run: echo  secrets.AWS_SECRET_ACCESS_KEY
-
       - name: configureawscredentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -64,6 +58,7 @@ jobs:
 
       - name: build assets
         run: |
+          npm run
           CI=false npm run build
           cat /home/runner/.npm/_logs/2024-05-05T09_27_00_851Z-debug-0.log
 
