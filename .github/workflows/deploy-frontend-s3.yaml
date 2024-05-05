@@ -3,9 +3,9 @@ name: Build and Deploy Frontend
 on:
   push:
     branches:
-      - 'master'
+      - "master"
       - main
-      - 'production'
+      - "production"
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: "npm"
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -58,6 +58,7 @@ jobs:
         run: |
           rm -rf .env
           echo "API_URL=${{ secrets.REACT_APP_WEB3_AUTH_CLIENT_ID }}" >> .env
+          pwd
 
       - name: build assets
         run: CI=false npm run build
