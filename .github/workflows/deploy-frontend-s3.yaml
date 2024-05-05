@@ -57,7 +57,7 @@ jobs:
 
       - name: build assets
         run: |
-          CI=false npm run build
+          CI=false npm run dev
           cat /home/runner/.npm/_logs/2024-05-05T09_27_00_851Z-debug-0.log
 
       # - name: 'Upload Artifact'
