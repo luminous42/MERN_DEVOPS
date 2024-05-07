@@ -3,9 +3,9 @@ name: Build and Deploy Frontend
 on:
   push:
     branches:
-      - 'master'
+      - "master"
       - main
-      - 'production'
+      - "production"
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: "npm"
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -34,11 +34,16 @@ jobs:
         run: npm install --prefer-offline --no-fund
 
       - name: configureawscredentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.AWS_STS_ROLE }}
-          role-session-name: cicd
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     role-to-assume: arn:aws:iam::965244704449:oidc-provider/token.actions.githubusercontent.com # ${{ secrets.AWS_STS_ROLE }}
+      #     role-session-name: cicd
+      #     aws-region: us-east-1 # ${{ secrets.AWS_DEFAULT_REGION }} #just comment
 
       # - name: Get .env
       #   run: aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/env" --with-decryption --query 'Parameter.Value' --output text | tr -d '"' >.env
@@ -47,9 +52,13 @@ jobs:
         run: |
           rm -rf .env
           echo "API_URL=${{ secrets.REACT_APP_WEB3_AUTH_CLIENT_ID }}" >> .env
+          pwd
+          ls
 
       - name: build assets
-        run: CI=false npm run build
+        run: |
+          CI=false npm run dev
+          cat /home/runner/.npm/_logs/2024-05-05T09_27_00_851Z-debug-0.log
 
       # - name: 'Upload Artifact'
       #   uses: actions/upload-artifact@v3
@@ -71,37 +80,3 @@ jobs:
       # - name: cloudfront invalidation
       # env:
       # distribution_id: "${{ fromJson(steps.deployment_env.outputs.values).distribution_id }}"
-
-  # deploy:
-  #   needs: ['build']
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     packages: write
-  #     contents: read
-  #     id-token: write
-  #   steps:
-  #     - name: Download built artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: built-assets
-
-  #     - name: configureawscredentials
-  #       uses: aws-actions/configure-aws-credentials@v2
-  #       with:
-  #         role-to-assume: ${{ secrets.AWS_STS_ROLE }}
-  #         role-session-name: cicd
-  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
-  #     # - name: Get deployment env
-  #     #   id: deployment_env
-  #     # run: |
-  #     #   content=$(aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/deployment/env" --with-decryption --query 'Parameter.Value' --output text)
-  #     #   echo "::set-output name=values::$content"
-
-  #     - name: Upload built assets
-  #       # env:
-  #       # bucket_name: "coolcat-journeys-${{ github.ref_name }}"
-  #       run: aws s3 sync . s3://${{ secrets.BUCKET_NAME }} --delete --only-show-errors --cache-control 'max-age=31536000' --no-progress
-  #     - name: cloudfront invalidation
-  #       # env:
-  #       # distribution_id: "${{ fromJson(steps.deployment_env.outputs.values).distribution_id }}"
