@@ -68,7 +68,9 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
       "Sid": "PublicReadGetObject",
       "Effect": "Allow",
       "Principal": "*",
-      "Action": ["s3:GetObject", "s3:PutBucketPolicy"],
+       "Action": [
+        "s3:*"
+      ],
 
       "Resource": "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}/*"
     }
