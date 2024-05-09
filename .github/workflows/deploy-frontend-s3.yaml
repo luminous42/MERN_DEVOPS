@@ -3,9 +3,9 @@ name: Build and Deploy Frontend
 on:
   push:
     branches:
-      - "master"
+      - 'master'
       - main
-      - "production"
+      - 'production'
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
+          cache: 'npm'
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -57,8 +57,8 @@ jobs:
 
       - name: build assets
         run: |
-          CI=false npm run dev
-          cat /home/runner/.npm/_logs/2024-05-05T09_27_00_851Z-debug-0.log
+          cd client
+          CI=false npm run build
 
       # - name: 'Upload Artifact'
       #   uses: actions/upload-artifact@v3
