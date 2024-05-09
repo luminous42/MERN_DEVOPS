@@ -36,4 +36,6 @@ jobs:
           terraform init
           terraform validate
           terraform plan
+          terraform apply -auto-approve || true
+          sleep 10
           terraform apply -auto-approve
